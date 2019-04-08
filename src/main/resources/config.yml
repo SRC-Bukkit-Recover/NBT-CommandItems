@@ -1,9 +1,15 @@
+permissions:
+  setleftcommand: "commanditems.setleftcommand"
+  setrightcommand: "commanditems.setrightcommand"
+  setonetimeuse: "commanditems.setonetimeuse"
+  getcommand: "commanditems.getcommand"
 messages:
   prefix: "&f[&b&lCommandItems&r&f] "
   successful: "&aSuccessfully executed"
   player-only: "&cThis command is for players only"
   no-permission: "&cYou don't have permission to do this"
   one-time-use-invalid-state: "&cThe state should be 'true' or 'false'"
+  no-item-on-hand: "&cYou must have an item on your hand to do this"
   usage:
     setleftcommand: "&cUsage: /commanditems setleftcommand <command>"
     setrightcommand: "&cUsage: /commanditems setrightcommand <command>"

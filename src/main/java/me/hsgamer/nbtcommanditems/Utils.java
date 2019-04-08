@@ -19,4 +19,8 @@ public class Utils {
             sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
         }
     }
+
+    public static Object getValueFromConfig(String path) {
+        return NBTCommandItems.getInstance().getConfig().get(path);
+    }
 }
