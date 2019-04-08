@@ -16,7 +16,10 @@ public class Variable {
         if (isPlaceholderAPI) {
             stringCopy = PlaceholderAPI.setPlaceholders(player, stringCopy);
         }
-        // TODO: local variables
+        // TODO: variables
+        stringCopy = stringCopy
+                .replace("<player>", player.getName())
+        ;
 
         return stringCopy;
     }
