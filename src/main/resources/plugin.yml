@@ -1,0 +1,15 @@
+name: NBT-CommandItems
+version: ${project.version}
+main: me.hsgamer.nbtcommanditems.NBTCommandItems
+api-version: 1.13
+softdepend: [PlaceholderAPI]
+authors: [HSGamer]
+description: Items with commands
+
+commands:
+  commanditems:
+    description: Main command
+    aliases:
+      - cmditems
+      - cmditem
+      - cmdi

@@ -1,0 +1,31 @@
+messages:
+  prefix: "&f[&b&lCommandItems&r&f] "
+  successful: "&aSuccessfully executed"
+  player-only: "&cThis command is for players only"
+  no-permission: "&cYou don't have permission to do this"
+  one-time-use-invalid-state: "&cThe state should be 'true' or 'false'"
+  usage:
+    setleftcommand: "&cUsage: /commanditems setleftcommand <command>"
+    setrightcommand: "&cUsage: /commanditems setrightcommand <command>"
+    setonetimeuse: "&cUsage: /commanditems setonetimeuse <true/false>"
+  help:
+    - "&f&l--------------------------------------------------------"
+    - ""
+    - "   &f&l/commanditems setleftcommand"
+    - "                &eAdd left-click command to the item"
+    - "   &f&l/commanditems setrightcommand"
+    - "                &eAdd right-click command to the item"
+    - "   &f&l/commanditems setonetimeuse"
+    - "                &eToggle one-time-use"
+    - "   &f&l/commanditems getcommand"
+    - "                &eGet command of the item"
+    - "   &f&l/commanditems help"
+    - "                &eHelp command"
+    - ""
+    - "&f&l--------------------------------------------------------"
+  getcommand:
+    found:
+      - "&b&lLeft-Click: &f<left-command>"
+      - "&b&lRight-Click: &f<right-command>"
+      - "&b&lOne-Time-Use: &f<one-time-use>"
+    not-found: "&cThis item does not contain commands"
