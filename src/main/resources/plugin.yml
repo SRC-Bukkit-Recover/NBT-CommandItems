@@ -2,6 +2,7 @@ name: NBT-CommandItems
 version: ${project.version}
 main: me.hsgamer.nbtcommanditems.NBTCommandItems
 api-version: 1.13
+depend: [ItemNBTAPI]
 softdepend: [PlaceholderAPI]
 authors: [HSGamer]
 description: Items with commands

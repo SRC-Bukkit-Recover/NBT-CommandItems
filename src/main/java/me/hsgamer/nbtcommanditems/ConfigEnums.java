@@ -16,6 +16,9 @@ public enum ConfigEnums {
     PERMISSION_SET_RIGHT_COMMAND("permissions.setrightcommand"),
     PERMISSION_SET_ONE_TIME_USE("permissions.setonetimeuse"),
     PERMISSION_GET_COMMAND("permissions.getcommand"),
+
+    GET_COMMAND_FOUND("messages.getcommand.found"),
+    GET_COMMAND_NOT_FOUND("messages.getcommand.not-found")
     ;
     String path;
     ConfigEnums(String path) {

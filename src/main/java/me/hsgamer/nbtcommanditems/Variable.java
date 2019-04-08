@@ -1,14 +1,14 @@
 package me.hsgamer.nbtcommanditems;
 
 import me.clip.placeholderapi.PlaceholderAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class Variable {
     private boolean isPlaceholderAPI;
 
-    public Variable(JavaPlugin plugin) {
-        isPlaceholderAPI = plugin.getServer().getPluginManager().isPluginEnabled("PlaceholderAPI");
+    public Variable() {
+        isPlaceholderAPI = Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI");
     }
 
     public String getParsed(Player player, String string) {

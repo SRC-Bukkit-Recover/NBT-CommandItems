@@ -1,5 +1,6 @@
 package me.hsgamer.nbtcommanditems;
 
+import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
-            sendHelpCommand(sender);
+            Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP.get()));
             return true;
         }
         if (sender instanceof Player) {
@@ -26,8 +27,10 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                             if (!item.getType().equals(Material.AIR)) {
+                                NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
-                                ((Player) sender).getInventory().setItemInMainHand(NBTEditor.setItemTag(item, String.join(" ", s), NBTEnums.LEFT_CLICK.get()));
+                                nbtItem.setString(NBTEnums.LEFT_CLICK.get(), String.join(" ", s));
+                                ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
                                 Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
@@ -46,9 +49,10 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                             if (!item.getType().equals(Material.AIR)) {
+                                NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
-                                ((Player) sender).getInventory().setItemInMainHand(NBTEditor.setItemTag(item, String.join(" ", s), NBTEnums.RIGHT_CLICK.get()));
-                                Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
+                                nbtItem.setString(NBTEnums.RIGHT_CLICK.get(), String.join(" ", s));
+                                ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
                             }
@@ -81,7 +85,9 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                             }
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                             if (!item.getType().equals(Material.AIR)) {
-                                ((Player) sender).getInventory().setItemInMainHand(NBTEditor.setItemTag(item, b, NBTEnums.ONE_TIME_USE.get()));
+                                NBTItem nbtItem = new NBTItem(item);
+                                nbtItem.setBoolean(NBTEnums.ONE_TIME_USE.get(), b);
+                                ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
                                 Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
@@ -97,7 +103,24 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 }
                 case "getcommand": {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_GET_COMMAND.get()))) {
-                        // get command of an item
+                        ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
+                        if (!item.getType().equals(Material.AIR)) {
+                            NBTItem nbtItem = new NBTItem(item);
+                            if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get()) || nbtItem.hasKey(NBTEnums.ONE_TIME_USE.get())) {
+                                List<String> found = NBTCommandItems.getInstance().getConfig().getStringList(ConfigEnums.GET_COMMAND_FOUND.get());
+                                List<String> foundCopy = new ArrayList<>();
+                                found.forEach((string) -> {
+                                    foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
+                                            .replace("<right-command>", nbtItem.getString(NBTEnums.RIGHT_CLICK.get()))
+                                            .replace("<one-time-use>", String.valueOf(nbtItem.getBoolean(NBTEnums.ONE_TIME_USE.get()))));
+                                });
+                                Utils.sendMessage(sender, foundCopy);
+                            } else {
+                                Utils.sendMessage(sender, ConfigEnums.GET_COMMAND_NOT_FOUND);
+                            }
+                        } else {
+                            Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
+                        }
                     } else {
                         Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
                         return true;
@@ -105,7 +128,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 default: {
-                    sendHelpCommand(sender);
+                    Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP.get()));
                     break;
                 }
             }
@@ -118,9 +141,5 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         return null;
-    }
-
-    private void sendHelpCommand(CommandSender sender) {
-        Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP.get()));
     }
 }

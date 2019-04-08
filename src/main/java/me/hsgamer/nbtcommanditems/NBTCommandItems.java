@@ -19,7 +19,7 @@ public final class NBTCommandItems extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
         instance = this;
-        variable = new Variable(this);
+        variable = new Variable();
         getCommand("commanditems").setExecutor(new PluginCommand());
         getServer().getPluginManager().registerEvents(new Listeners(), this);
     }

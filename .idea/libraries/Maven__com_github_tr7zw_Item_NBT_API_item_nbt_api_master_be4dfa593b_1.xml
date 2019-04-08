@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.github.tr7zw.Item-NBT-API:item-nbt-api:master-be4dfa593b-1">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/tr7zw/Item-NBT-API/item-nbt-api/master-be4dfa593b-1/item-nbt-api-master-be4dfa593b-1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/tr7zw/Item-NBT-API/item-nbt-api/master-be4dfa593b-1/item-nbt-api-master-be4dfa593b-1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/github/tr7zw/Item-NBT-API/item-nbt-api/master-be4dfa593b-1/item-nbt-api-master-be4dfa593b-1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
