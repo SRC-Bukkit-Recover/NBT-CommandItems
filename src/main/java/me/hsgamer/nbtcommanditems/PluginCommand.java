@@ -109,11 +109,9 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                             if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get()) || nbtItem.hasKey(NBTEnums.ONE_TIME_USE.get())) {
                                 List<String> found = NBTCommandItems.getInstance().getConfig().getStringList(ConfigEnums.GET_COMMAND_FOUND.get());
                                 List<String> foundCopy = new ArrayList<>();
-                                found.forEach((string) -> {
-                                    foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
-                                            .replace("<right-command>", nbtItem.getString(NBTEnums.RIGHT_CLICK.get()))
-                                            .replace("<one-time-use>", String.valueOf(nbtItem.getBoolean(NBTEnums.ONE_TIME_USE.get()))));
-                                });
+                                found.forEach((string) -> foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
+                                        .replace("<right-command>", nbtItem.getString(NBTEnums.RIGHT_CLICK.get()))
+                                        .replace("<one-time-use>", String.valueOf(nbtItem.getBoolean(NBTEnums.ONE_TIME_USE.get())))));
                                 Utils.sendMessage(sender, foundCopy);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.GET_COMMAND_NOT_FOUND);
@@ -140,6 +138,31 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
 
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
-        return null;
+        List<String> list = new ArrayList<>();
+        if (args.length < 1 || args[0].equals("")) {
+            list.add("setleftcommand");
+            list.add("setrightcommand");
+            list.add("setonetimeuse");
+            list.add("getcommand");
+            list.add("help");
+        } else if (args.length == 1) {
+            if ("set".startsWith(args[0].toLowerCase())) {
+                list.add("setleftcommand");
+                list.add("setrightcommand");
+                list.add("setonetimeuse");
+            } else if ("getcommand".startsWith(args[0].toLowerCase())) {
+                list.add("getcommand");
+            } else if ("setleftcommand".startsWith(args[0].toLowerCase())) {
+                list.add("setleftcommand");
+            } else if ("setrightcommand".startsWith(args[0].toLowerCase())) {
+                list.add("setrightcommand");
+            } else if ("setonetimeuse".startsWith(args[0].toLowerCase())) {
+                list.add("setonetimeuse");
+            }
+        } else if (args.length == 2 && args[0].equalsIgnoreCase("setonetimeuse")) {
+            list.add("true");
+            list.add("false");
+        }
+        return list;
     }
 }

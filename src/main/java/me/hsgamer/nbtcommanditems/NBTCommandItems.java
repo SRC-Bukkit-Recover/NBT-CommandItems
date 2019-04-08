@@ -20,7 +20,9 @@ public final class NBTCommandItems extends JavaPlugin {
         saveDefaultConfig();
         instance = this;
         variable = new Variable();
-        getCommand("commanditems").setExecutor(new PluginCommand());
+        PluginCommand command = new PluginCommand();
+        getCommand("commanditems").setExecutor(command);
+        getCommand("commanditems").setTabCompleter(command);
         getServer().getPluginManager().registerEvents(new Listeners(), this);
     }
 
