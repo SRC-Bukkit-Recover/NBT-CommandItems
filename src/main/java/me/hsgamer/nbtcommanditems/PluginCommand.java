@@ -115,7 +115,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                             if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get()) || nbtItem.hasKey(NBTEnums.ONE_TIME_USE.get())) {
                                 List<String> found = NBTCommandItems.getInstance().getConfig().getStringList(ConfigEnums.GET_COMMAND_FOUND.get());
                                 List<String> foundCopy = new ArrayList<>();
-                                found.forEach((string) -> foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
+                                found.forEach(string -> foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
                                         .replace("<right-command>", nbtItem.getString(NBTEnums.RIGHT_CLICK.get()))
                                         .replace("<one-time-use>", String.valueOf(nbtItem.getBoolean(NBTEnums.ONE_TIME_USE.get())))));
                                 Utils.sendMessage(sender, foundCopy);
