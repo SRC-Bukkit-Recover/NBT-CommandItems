@@ -15,7 +15,7 @@ public class Listeners implements Listener {
         ItemStack item = event.getItem();
         NBTItem nbtitem = new NBTItem(item);
         Player player = event.getPlayer();
-        if (!(nbtitem.hasKey(NBTEnums.LEFT_CLICK.get()) && nbtitem.hasKey(NBTEnums.RIGHT_CLICK.get()))) return;
+        if (!(nbtitem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtitem.hasKey(NBTEnums.RIGHT_CLICK.get()))) return;
         String leftclick = nbtitem.getString(NBTEnums.LEFT_CLICK.get());
         String rightclick = nbtitem.getString(NBTEnums.RIGHT_CLICK.get());
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
