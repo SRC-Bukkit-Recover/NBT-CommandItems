@@ -19,12 +19,12 @@ public class Listeners implements Listener {
         String leftclick = nbtitem.getString(NBTEnums.LEFT_CLICK.get());
         String rightclick = nbtitem.getString(NBTEnums.RIGHT_CLICK.get());
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (leftclick != null) {
+            if (!leftclick.equals("")) {
                 player.chat("/" + NBTCommandItems.getVariable().getParsed(player, leftclick));
                 event.setCancelled(true);
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (rightclick != null) {
+            if (!rightclick.equals("")) {
                 player.chat("/" + NBTCommandItems.getVariable().getParsed(player, rightclick));
                 event.setCancelled(true);
             }
