@@ -14,6 +14,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PluginCommand implements TabExecutor, CommandExecutor {
+    private static final String SET_LEFT_COMMAND = "setleftcommand";
+    private static final String SET_RIGHT_COMMAND = "setrightcommand";
+    private static final String SET_ONE_TIME_USE = "setonetimeuse";
+    private static final String GET_COMMAND = "getcommand";
+    private static final String HELP = "help";
+
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if (args.length < 1 || args[0].equalsIgnoreCase("help")) {
@@ -22,7 +28,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         }
         if (sender instanceof Player) {
             switch (args[0].toLowerCase()) {
-                case "setleftcommand": {
+                case SET_LEFT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND.get()))) {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
@@ -44,7 +50,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     }
                     break;
                 }
-                case "setrightcommand": {
+                case SET_RIGHT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND.get()))) {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
@@ -65,7 +71,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     }
                     break;
                 }
-                case "setonetimeuse": {
+                case SET_ONE_TIME_USE: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_ONE_TIME_USE.get()))) {
                         if (args.length == 2) {
                             boolean b;
@@ -101,7 +107,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     }
                     break;
                 }
-                case "getcommand": {
+                case GET_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_GET_COMMAND.get()))) {
                         ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                         if (!item.getType().equals(Material.AIR)) {
@@ -140,26 +146,26 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         List<String> list = new ArrayList<>();
         if (args.length < 1 || args[0].equals("")) {
-            list.add("setleftcommand");
-            list.add("setrightcommand");
-            list.add("setonetimeuse");
-            list.add("getcommand");
-            list.add("help");
+            list.add(SET_LEFT_COMMAND);
+            list.add(SET_RIGHT_COMMAND);
+            list.add(SET_ONE_TIME_USE);
+            list.add(GET_COMMAND);
+            list.add(HELP);
         } else if (args.length == 1) {
             if ("set".startsWith(args[0].toLowerCase())) {
-                list.add("setleftcommand");
-                list.add("setrightcommand");
-                list.add("setonetimeuse");
-            } else if ("getcommand".startsWith(args[0].toLowerCase())) {
-                list.add("getcommand");
-            } else if ("setleftcommand".startsWith(args[0].toLowerCase())) {
-                list.add("setleftcommand");
-            } else if ("setrightcommand".startsWith(args[0].toLowerCase())) {
-                list.add("setrightcommand");
-            } else if ("setonetimeuse".startsWith(args[0].toLowerCase())) {
-                list.add("setonetimeuse");
+                list.add(SET_LEFT_COMMAND);
+                list.add(SET_RIGHT_COMMAND);
+                list.add(SET_ONE_TIME_USE);
+            } else if (GET_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(GET_COMMAND);
+            } else if (SET_LEFT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(SET_LEFT_COMMAND);
+            } else if (SET_RIGHT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(SET_RIGHT_COMMAND);
+            } else if (SET_ONE_TIME_USE.startsWith(args[0].toLowerCase())) {
+                list.add(SET_ONE_TIME_USE);
             }
-        } else if (args.length == 2 && args[0].equalsIgnoreCase("setonetimeuse")) {
+        } else if (args.length == 2 && args[0].equalsIgnoreCase(SET_ONE_TIME_USE)) {
             list.add("true");
             list.add("false");
         }

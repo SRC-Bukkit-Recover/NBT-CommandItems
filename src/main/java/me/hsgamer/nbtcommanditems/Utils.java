@@ -6,6 +6,10 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 public class Utils {
+    private Utils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', NBTCommandItems.getInstance().getConfig().getString(ConfigEnums.PREFIX.get()) + message));
     }
