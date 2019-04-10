@@ -2,6 +2,7 @@ permissions:
   setleftcommand: "commanditems.setleftcommand"
   setrightcommand: "commanditems.setrightcommand"
   setonetimeuse: "commanditems.setonetimeuse"
+  setsendas: "commanditems.setsendas"
   getcommand: "commanditems.getcommand"
 messages:
   prefix: "&f[&b&lCommandItems&r&f] "
@@ -9,11 +10,13 @@ messages:
   player-only: "&cThis command is for players only"
   no-permission: "&cYou don't have permission to do this"
   one-time-use-invalid-state: "&cThe state should be 'true' or 'false'"
+  set-send-as-invalid-sender: "&cThe sender should be 'console', 'player' or 'op'"
   no-item-on-hand: "&cYou must have an item on your hand to do this"
   usage:
     setleftcommand: "&cUsage: /commanditems setleftcommand <command>"
     setrightcommand: "&cUsage: /commanditems setrightcommand <command>"
     setonetimeuse: "&cUsage: /commanditems setonetimeuse <true/false>"
+    setsendas: "&cUsage: /commanditems setsendas <console/player/op>"
   help:
     - "&f&l--------------------------------------------------------"
     - ""
@@ -23,6 +26,8 @@ messages:
     - "                &eAdd right-click command to the item"
     - "   &f&l/commanditems setonetimeuse"
     - "                &eToggle one-time-use"
+    - "   &f&l/commanditems setsendas"
+    - "                &eSet command sender"
     - "   &f&l/commanditems getcommand"
     - "                &eGet command of the item"
     - "   &f&l/commanditems help"
@@ -33,5 +38,6 @@ messages:
     found:
       - "&b&lLeft-Click: &f<left-command>"
       - "&b&lRight-Click: &f<right-command>"
+      - "&b&lSend-As: &f<send-as>"
       - "&b&lOne-Time-Use: &f<one-time-use>"
     not-found: "&cThis item does not contain commands"

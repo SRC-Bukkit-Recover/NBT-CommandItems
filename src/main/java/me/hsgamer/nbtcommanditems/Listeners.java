@@ -1,6 +1,7 @@
 package me.hsgamer.nbtcommanditems;
 
 import de.tr7zw.itemnbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,16 +17,38 @@ public class Listeners implements Listener {
         NBTItem nbtitem = new NBTItem(item);
         Player player = event.getPlayer();
         if (!(nbtitem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtitem.hasKey(NBTEnums.RIGHT_CLICK.get()))) return;
-        String leftclick = nbtitem.getString(NBTEnums.LEFT_CLICK.get());
-        String rightclick = nbtitem.getString(NBTEnums.RIGHT_CLICK.get());
+        String leftclick = NBTCommandItems.getVariable().getParsed(player, nbtitem.getString(NBTEnums.LEFT_CLICK.get()));
+        String rightclick = NBTCommandItems.getVariable().getParsed(player, nbtitem.getString(NBTEnums.RIGHT_CLICK.get()));
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
             if (!leftclick.equals("")) {
-                player.chat("/" + NBTCommandItems.getVariable().getParsed(player, leftclick));
+                if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
+                    player.performCommand(leftclick);
+                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
+                    try {
+                        player.setOp(true);
+                        player.performCommand(leftclick);
+                    } finally {
+                        player.setOp(false);
+                    }
+                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), leftclick);
+                }
                 event.setCancelled(true);
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             if (!rightclick.equals("")) {
-                player.chat("/" + NBTCommandItems.getVariable().getParsed(player, rightclick));
+                if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
+                    player.performCommand(rightclick);
+                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
+                    try {
+                        player.setOp(true);
+                        player.performCommand(rightclick);
+                    } finally {
+                        player.setOp(false);
+                    }
+                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), rightclick);
+                }
                 event.setCancelled(true);
             }
         } else {
