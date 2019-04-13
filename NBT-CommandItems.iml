@@ -39,5 +39,6 @@
     <orderEntry type="library" name="Maven: commons-io:commons-io:2.4" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: me.clip:placeholderapi:2.9.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.tr7zw.Item-NBT-API:item-nbt-api:master-be4dfa593b-1" level="project" />
+    <orderEntry type="library" name="Maven: org.bstats:bstats-bukkit:1.4" level="project" />
   </component>
 </module>

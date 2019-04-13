@@ -1,11 +1,13 @@
 package me.hsgamer.nbtcommanditems;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class NBTCommandItems extends JavaPlugin {
     private static NBTCommandItems instance;
     private static Variable variable;
+    private static Metrics metrics;
 
     public static NBTCommandItems getInstance() {
         return instance;
@@ -20,6 +22,7 @@ public final class NBTCommandItems extends JavaPlugin {
         saveDefaultConfig();
         instance = this;
         variable = new Variable();
+        metrics = new Metrics(this);
         PluginCommand command = new PluginCommand();
         getCommand("commanditems").setExecutor(command);
         getCommand("commanditems").setTabCompleter(command);
@@ -30,6 +33,7 @@ public final class NBTCommandItems extends JavaPlugin {
     public void onDisable() {
         instance = null;
         variable = null;
+        metrics = null;
         HandlerList.unregisterAll(this);
     }
 }
