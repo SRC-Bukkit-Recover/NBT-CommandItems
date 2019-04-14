@@ -26,7 +26,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         if (sender instanceof Player) {
             switch (args[0].toLowerCase()) {
                 case SET_LEFT_COMMAND: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND.get()))) {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                             if (!item.getType().equals(Material.AIR)) {
@@ -47,7 +47,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 case SET_RIGHT_COMMAND: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND.get()))) {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                             if (!item.getType().equals(Material.AIR)) {
@@ -67,7 +67,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 case SET_ONE_TIME_USE: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_ONE_TIME_USE.get()))) {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_ONE_TIME_USE))) {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
                                 boolean b = Boolean.parseBoolean(args[1].toLowerCase());
@@ -92,7 +92,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 case SET_SEND_AS: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_SEND_AS.get()))) {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_SEND_AS))) {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("console") || args[1].equalsIgnoreCase("op") || args[1].equalsIgnoreCase("player")) {
                                 ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
@@ -116,18 +116,18 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 case GET_COMMAND: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_GET_COMMAND.get()))) {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_GET_COMMAND))) {
                         ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
                         if (!item.getType().equals(Material.AIR)) {
                             NBTItem nbtItem = new NBTItem(item);
                             if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get()) || nbtItem.hasKey(NBTEnums.ONE_TIME_USE.get())) {
-                                List<String> found = NBTCommandItems.getInstance().getConfig().getStringList(ConfigEnums.GET_COMMAND_FOUND.get());
+                                List<String> found = (List<String>) Utils.getValueFromConfig(ConfigEnums.GET_COMMAND_FOUND);
                                 List<String> foundCopy = new ArrayList<>();
                                 found.forEach(string -> foundCopy.add(string.replace("<left-command>", nbtItem.getString(NBTEnums.LEFT_CLICK.get()))
                                         .replace("<right-command>", nbtItem.getString(NBTEnums.RIGHT_CLICK.get()))
                                         .replace("<one-time-use>", String.valueOf(nbtItem.getBoolean(NBTEnums.ONE_TIME_USE.get())))
                                         .replace("<send-as>", nbtItem.getString(NBTEnums.SEND_AS.get()))));
-                                Utils.sendMessage(sender, foundCopy);
+                                Utils.sendMessage(sender, foundCopy, true);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.GET_COMMAND_NOT_FOUND);
                             }
@@ -141,12 +141,12 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 }
                 case HELP:
                 default: {
-                    Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP.get()));
+                    Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP), false);
                     break;
                 }
             }
         } else if (args.length < 1 || args[0].equalsIgnoreCase(HELP)) {
-            Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP.get()));
+            Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP), false);
         } else {
             Utils.sendMessage(sender, ConfigEnums.PLAYER_ONLY);
         }
@@ -181,18 +181,13 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 list.add(SET_SEND_AS);
             }
         } else if (args.length == 2) {
-            switch (args[0].toLowerCase()) {
-                case SET_ONE_TIME_USE: {
-                    list.add("true");
-                    list.add("false");
-                    break;
-                }
-                case SET_SEND_AS: {
-                    list.add("console");
-                    list.add("player");
-                    list.add("op");
-                    break;
-                }
+            if (SET_ONE_TIME_USE.equalsIgnoreCase(args[0])) {
+                list.add("true");
+                list.add("false");
+            } else if (SET_SEND_AS.equalsIgnoreCase(args[0])) {
+                list.add("console");
+                list.add("player");
+                list.add("op");
             }
         }
         return list;

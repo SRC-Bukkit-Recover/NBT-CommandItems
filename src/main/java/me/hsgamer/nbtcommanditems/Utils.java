@@ -14,21 +14,25 @@ public class Utils {
     }
 
     public static void sendMessage(CommandSender sender, String message) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', NBTCommandItems.getInstance().getConfig().getString(ConfigEnums.PREFIX.get()) + message));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', NBTCommandItems.getInstance().getConfigFile().getConfig().getString(ConfigEnums.PREFIX.getPath(), (String) ConfigEnums.PREFIX.getDef()) + message));
     }
 
     public static void sendMessage(CommandSender sender, ConfigEnums configEnums) {
-        sendMessage(sender, NBTCommandItems.getInstance().getConfig().getString(configEnums.get()));
+        sendMessage(sender, NBTCommandItems.getInstance().getConfigFile().getConfig().getString(configEnums.getPath(), (String) configEnums.getDef()));
     }
 
-    public static void sendMessage(CommandSender sender, List<String> strings) {
+    public static void sendMessage(CommandSender sender, List<String> strings, boolean prefix) {
         for (String message : strings) {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+            if (prefix) {
+                sendMessage(sender, message);
+            } else {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+            }
         }
     }
 
-    public static Object getValueFromConfig(String path) {
-        return NBTCommandItems.getInstance().getConfig().get(path);
+    public static Object getValueFromConfig(ConfigEnums configEnums) {
+        return NBTCommandItems.getInstance().getConfigFile().getConfig().get(configEnums.getPath(), configEnums.getDef());
     }
 
     public static void setItem(Player player, ItemStack item, EquipmentSlot slot) {

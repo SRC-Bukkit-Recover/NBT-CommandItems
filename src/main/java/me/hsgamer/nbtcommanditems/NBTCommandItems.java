@@ -7,7 +7,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class NBTCommandItems extends JavaPlugin {
     private static NBTCommandItems instance;
     private static Variable variable;
-    private static Metrics metrics;
+    private Metrics metrics;
+    private ConfigFile configFile;
+
+    public ConfigFile getConfigFile() {
+        return configFile;
+    }
 
     public static NBTCommandItems getInstance() {
         return instance;
@@ -19,8 +24,8 @@ public final class NBTCommandItems extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        saveDefaultConfig();
         instance = this;
+        configFile = new ConfigFile(this);
         variable = new Variable();
         metrics = new Metrics(this);
         PluginCommand command = new PluginCommand();
@@ -31,6 +36,7 @@ public final class NBTCommandItems extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        configFile = null;
         instance = null;
         variable = null;
         metrics = null;
