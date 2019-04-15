@@ -36,6 +36,7 @@ public class Utils {
     }
 
     public static void setItem(Player player, ItemStack item, EquipmentSlot slot) {
+        if (slot == null) return;
         switch (slot) {
             case HAND: {
                 player.getInventory().setItemInMainHand(item);

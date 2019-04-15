@@ -7,15 +7,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class Listeners implements Listener {
     @EventHandler
     public void onUse(PlayerInteractEvent event) {
         if (!event.hasItem()) return;
-        EquipmentSlot slot = event.getHand();
-        if (slot == null) return;
         ItemStack item = event.getItem();
         NBTItem nbtitem = new NBTItem(item);
         Player player = event.getPlayer();
@@ -62,9 +59,17 @@ public class Listeners implements Listener {
             if (onetimeuse) {
                 if (item.getAmount() > 1) {
                     item.setAmount(item.getAmount() - 1);
-                    Utils.setItem(player, item, slot);
+                    if (NBTCommandItems.getInstance().isLegacy()) {
+                        player.setItemInHand(item);
+                    } else {
+                        Utils.setItem(player, item, event.getHand());
+                    }
                 } else {
-                    Utils.setItem(player, null, slot);
+                    if (NBTCommandItems.getInstance().isLegacy()) {
+                        player.setItemInHand(null);
+                    } else {
+                        Utils.setItem(player, null, event.getHand());
+                    }
                 }
             }
         }

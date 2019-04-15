@@ -9,6 +9,7 @@ public final class NBTCommandItems extends JavaPlugin {
     private static Variable variable;
     private Metrics metrics;
     private ConfigFile configFile;
+    private boolean legacy = false;
 
     public ConfigFile getConfigFile() {
         return configFile;
@@ -25,6 +26,7 @@ public final class NBTCommandItems extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        legacy = getServer().getVersion().contains("1.8") || getServer().getVersion().contains("1.7");
         configFile = new ConfigFile(this);
         variable = new Variable();
         metrics = new Metrics(this);
@@ -41,5 +43,9 @@ public final class NBTCommandItems extends JavaPlugin {
         variable = null;
         metrics = null;
         HandlerList.unregisterAll(this);
+    }
+
+    public boolean isLegacy() {
+        return legacy;
     }
 }

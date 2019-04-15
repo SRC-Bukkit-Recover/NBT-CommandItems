@@ -32,12 +32,12 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 case SET_LEFT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND))) {
                         if (args.length > 1) {
-                            ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
-                            if (!item.getType().equals(Material.AIR)) {
+                            ItemStack item = getItem((Player) sender);
+                            if (!item.getType().equals(Material.AIR) && item != null) {
                                 NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
                                 nbtItem.setString(NBTEnums.LEFT_CLICK.get(), String.join(" ", s));
-                                ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
+                                setItem((Player) sender, nbtItem.getItem());
                                 Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
@@ -53,12 +53,12 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 case SET_RIGHT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND))) {
                         if (args.length > 1) {
-                            ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
-                            if (!item.getType().equals(Material.AIR)) {
+                            ItemStack item = getItem((Player) sender);
+                            if (!item.getType().equals(Material.AIR) && item != null) {
                                 NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
                                 nbtItem.setString(NBTEnums.RIGHT_CLICK.get(), String.join(" ", s));
-                                ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
+                                setItem((Player) sender, nbtItem.getItem());
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
                             }
@@ -75,11 +75,11 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("true") || args[1].equalsIgnoreCase("false")) {
                                 boolean b = Boolean.parseBoolean(args[1].toLowerCase());
-                                ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
+                                ItemStack item = getItem((Player) sender);
                                 if (!item.getType().equals(Material.AIR)) {
                                     NBTItem nbtItem = new NBTItem(item);
                                     nbtItem.setBoolean(NBTEnums.ONE_TIME_USE.get(), b);
-                                    ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
+                                    setItem((Player) sender, nbtItem.getItem());
                                     Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                                 } else {
                                     Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
@@ -99,11 +99,11 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_SEND_AS))) {
                         if (args.length == 2) {
                             if (args[1].equalsIgnoreCase("console") || args[1].equalsIgnoreCase("op") || args[1].equalsIgnoreCase("player")) {
-                                ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
+                                ItemStack item = getItem((Player) sender);
                                 if (!item.getType().equals(Material.AIR)) {
                                     NBTItem nbtItem = new NBTItem(item);
                                     nbtItem.setString(NBTEnums.SEND_AS.get(), args[1].toLowerCase());
-                                    ((Player) sender).getInventory().setItemInMainHand(nbtItem.getItem());
+                                    setItem((Player) sender, nbtItem.getItem());
                                     Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                                 } else {
                                     Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
@@ -121,7 +121,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 }
                 case GET_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_GET_COMMAND))) {
-                        ItemStack item = ((Player) sender).getInventory().getItemInMainHand();
+                        ItemStack item = getItem((Player) sender);
                         if (!item.getType().equals(Material.AIR)) {
                             NBTItem nbtItem = new NBTItem(item);
                             if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get()) || nbtItem.hasKey(NBTEnums.ONE_TIME_USE.get())) {
@@ -193,5 +193,23 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
             }
         }
         return list;
+    }
+
+    @SuppressWarnings("deprecation")
+    private ItemStack getItem(Player player) {
+        if (NBTCommandItems.getInstance().isLegacy()) {
+            return player.getItemInHand();
+        } else {
+            return player.getInventory().getItemInMainHand();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    private void setItem(Player player, ItemStack item) {
+        if (NBTCommandItems.getInstance().isLegacy()) {
+            player.setItemInHand(item);
+        } else {
+            player.getInventory().setItemInMainHand(item);
+        }
     }
 }
