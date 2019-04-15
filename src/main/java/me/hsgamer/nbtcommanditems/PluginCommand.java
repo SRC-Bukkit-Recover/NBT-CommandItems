@@ -33,7 +33,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = getItem((Player) sender);
-                            if (!item.getType().equals(Material.AIR) && item != null) {
+                            if (!item.getType().equals(Material.AIR)) {
                                 NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
                                 nbtItem.setString(NBTEnums.LEFT_CLICK.get(), String.join(" ", s));
@@ -54,7 +54,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = getItem((Player) sender);
-                            if (!item.getType().equals(Material.AIR) && item != null) {
+                            if (!item.getType().equals(Material.AIR)) {
                                 NBTItem nbtItem = new NBTItem(item);
                                 List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
                                 nbtItem.setString(NBTEnums.RIGHT_CLICK.get(), String.join(" ", s));
