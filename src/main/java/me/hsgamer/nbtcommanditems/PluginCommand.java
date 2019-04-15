@@ -23,6 +23,10 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (args.length < 1 || args[0].equalsIgnoreCase(HELP)) {
+            Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP), false);
+            return true;
+        }
         if (sender instanceof Player) {
             switch (args[0].toLowerCase()) {
                 case SET_LEFT_COMMAND: {
@@ -145,8 +149,6 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
             }
-        } else if (args.length < 1 || args[0].equalsIgnoreCase(HELP)) {
-            Utils.sendMessage(sender, (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP), false);
         } else {
             Utils.sendMessage(sender, ConfigEnums.PLAYER_ONLY);
         }
