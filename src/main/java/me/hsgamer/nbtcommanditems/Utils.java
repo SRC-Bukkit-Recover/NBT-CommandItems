@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.*;
 import java.util.List;
 
 public class Utils {
@@ -63,5 +64,24 @@ public class Utils {
                 break;
             }
         }
+    }
+
+    public static byte[] toBytes(String[] strings) throws IOException {
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(byteArrayOutputStream);
+        objectOutputStream.writeObject(strings);
+        objectOutputStream.flush();
+        objectOutputStream.close();
+
+        return byteArrayOutputStream.toByteArray();
+    }
+
+    public static String[] toStrings(byte[] bytes) throws IOException, ClassNotFoundException {
+        ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(bytes);
+        ObjectInputStream objectInputStream = new ObjectInputStream(byteArrayInputStream);
+        String[] stringArray2 = (String[]) objectInputStream.readObject();
+        objectInputStream.close();
+
+        return stringArray2;
     }
 }

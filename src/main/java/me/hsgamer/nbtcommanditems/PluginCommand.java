@@ -1,5 +1,6 @@
 package me.hsgamer.nbtcommanditems;
 
+import com.sun.deploy.ui.UITextArea;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -9,6 +10,8 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import javax.rmi.CORBA.Util;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +19,10 @@ import java.util.List;
 public class PluginCommand implements TabExecutor, CommandExecutor {
     private static final String SET_LEFT_COMMAND = "setleftcommand";
     private static final String SET_RIGHT_COMMAND = "setrightcommand";
+    private static final String ADD_LEFT_COMMAND = "addleftcommand";
+    private static final String ADD_RIGHT_COMMAND = "addrightcommand";
+    private static final String DEL_LEFT_COMMAND = "delleftcommand";
+    private static final String DEL_RIGHT_COMMAND = "delrightcommand";
     private static final String SET_ONE_TIME_USE = "setonetimeuse";
     private static final String SET_SEND_AS = "setsendas";
     private static final String GET_COMMAND = "getcommand";
@@ -29,45 +36,92 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         }
         if (sender instanceof Player) {
             switch (args[0].toLowerCase()) {
-                case SET_LEFT_COMMAND: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND))) {
+                case ADD_LEFT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_ADD_LEFT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = getItem((Player) sender);
                             if (!item.getType().equals(Material.AIR)) {
                                 NBTItem nbtItem = new NBTItem(item);
-                                List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
-                                nbtItem.setString(NBTEnums.LEFT_CLICK.get(), String.join(" ", s));
+                                String s = String.join(" ", new ArrayList<>(Arrays.asList(args).subList(1, args.length)));
+                                List<String> sl = new ArrayList<>();
+                                if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get())) {
+                                    try {
+                                        sl = Arrays.asList(Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get())));
+                                    } catch (IOException | ClassNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                sl.add(s);
+                                byte[] b = new byte[0];
+                                try {
+                                    b = Utils.toBytes(sl.toArray(new String[0]));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                nbtItem.setByteArray(NBTEnums.LEFT_CLICK.get(), b);
                                 setItem((Player) sender, nbtItem.getItem());
                                 Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
                             }
                         } else {
-                            Utils.sendMessage(sender, ConfigEnums.USAGE_SET_LEFT_COMMAND);
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_ADD_LEFT_COMMAND);
                         }
                     } else {
                         Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
                     }
                     break;
                 }
-                case SET_RIGHT_COMMAND: {
-                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND))) {
+                case ADD_RIGHT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_ADD_RIGHT_COMMAND))) {
                         if (args.length > 1) {
                             ItemStack item = getItem((Player) sender);
                             if (!item.getType().equals(Material.AIR)) {
                                 NBTItem nbtItem = new NBTItem(item);
-                                List<String> s = new ArrayList<>(Arrays.asList(args).subList(1, args.length));
-                                nbtItem.setString(NBTEnums.RIGHT_CLICK.get(), String.join(" ", s));
+                                String s = String.join(" ", new ArrayList<>(Arrays.asList(args).subList(1, args.length)));
+                                List<String> sl = new ArrayList<>();
+                                if (nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get())) {
+                                    try {
+                                        sl = Arrays.asList(Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get())));
+                                    } catch (IOException | ClassNotFoundException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                sl.add(s);
+                                byte[] b = new byte[0];
+                                try {
+                                    b = Utils.toBytes(sl.toArray(new String[0]));
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                nbtItem.setByteArray(NBTEnums.RIGHT_CLICK.get(), b);
                                 setItem((Player) sender, nbtItem.getItem());
+                                Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
                             } else {
                                 Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
                             }
                         } else {
-                            Utils.sendMessage(sender, ConfigEnums.USAGE_SET_RIGHT_COMMAND);
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_ADD_RIGHT_COMMAND);
                         }
                     } else {
                         Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
                     }
+                    break;
+                }
+                case DEL_LEFT_COMMAND: {
+
+                    break;
+                }
+                case DEL_RIGHT_COMMAND: {
+
+                    break;
+                }
+                case SET_LEFT_COMMAND: {
+
+                    break;
+                }
+                case SET_RIGHT_COMMAND: {
+
                     break;
                 }
                 case SET_ONE_TIME_USE: {
@@ -161,6 +215,10 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         if (args.length < 1 || args[0].equals("")) {
             list.add(SET_LEFT_COMMAND);
             list.add(SET_RIGHT_COMMAND);
+            list.add(ADD_LEFT_COMMAND);
+            list.add(ADD_RIGHT_COMMAND);
+            list.add(DEL_LEFT_COMMAND);
+            list.add(DEL_RIGHT_COMMAND);
             list.add(SET_ONE_TIME_USE);
             list.add(SET_SEND_AS);
             list.add(GET_COMMAND);
@@ -171,12 +229,26 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 list.add(SET_RIGHT_COMMAND);
                 list.add(SET_ONE_TIME_USE);
                 list.add(SET_SEND_AS);
+            } else if ("add".startsWith(args[0].toLowerCase())) {
+                list.add(ADD_LEFT_COMMAND);
+                list.add(ADD_RIGHT_COMMAND);
+            } else if ("del".startsWith(args[0].toLowerCase())) {
+                list.add(DEL_LEFT_COMMAND);
+                list.add(DEL_RIGHT_COMMAND);
             } else if (GET_COMMAND.startsWith(args[0].toLowerCase())) {
                 list.add(GET_COMMAND);
             } else if (SET_LEFT_COMMAND.startsWith(args[0].toLowerCase())) {
                 list.add(SET_LEFT_COMMAND);
             } else if (SET_RIGHT_COMMAND.startsWith(args[0].toLowerCase())) {
                 list.add(SET_RIGHT_COMMAND);
+            } else if (ADD_LEFT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(ADD_LEFT_COMMAND);
+            } else if (ADD_RIGHT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(ADD_RIGHT_COMMAND);
+            } else if (DEL_LEFT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(DEL_LEFT_COMMAND);
+            } else if (DEL_RIGHT_COMMAND.startsWith(args[0].toLowerCase())) {
+                list.add(DEL_RIGHT_COMMAND);
             } else if (SET_ONE_TIME_USE.startsWith(args[0].toLowerCase())) {
                 list.add(SET_ONE_TIME_USE);
             } else if (SET_SEND_AS.startsWith(args[0].toLowerCase())) {
