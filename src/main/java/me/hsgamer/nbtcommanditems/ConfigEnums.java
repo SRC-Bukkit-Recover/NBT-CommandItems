@@ -53,10 +53,10 @@ public enum ConfigEnums {
             "&b&lSend-As: &f<send-as>",
             "&b&lOne-Time-Use: &f<one-time-use>"
     )),
-    GET_COMMAND_NOT_FOUND("messages.getcommand.not-found", "&cThis item does not contain commands")
-    ;
+    GET_COMMAND_NOT_FOUND("messages.getcommand.not-found", "&cThis item does not contain commands");
     String path;
     Object def;
+
     ConfigEnums(String path, Object def) {
         this.path = path;
         this.def = def;
@@ -66,5 +66,7 @@ public enum ConfigEnums {
         return path;
     }
 
-    public Object getDef() { return def; }
+    public Object getDef() {
+        return def;
+    }
 }

@@ -11,16 +11,16 @@ public final class NBTCommandItems extends JavaPlugin {
     private ConfigFile configFile;
     private boolean legacy = false;
 
-    public ConfigFile getConfigFile() {
-        return configFile;
-    }
-
     public static NBTCommandItems getInstance() {
         return instance;
     }
 
     public static Variable getVariable() {
         return variable;
+    }
+
+    public ConfigFile getConfigFile() {
+        return configFile;
     }
 
     @Override
