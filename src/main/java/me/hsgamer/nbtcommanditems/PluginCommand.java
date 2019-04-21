@@ -44,15 +44,15 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                                 List<String> sl = new ArrayList<>();
                                 if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get())) {
                                     try {
-                                        sl = Arrays.asList(Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get())));
-                                    } catch (IOException | ClassNotFoundException e) {
+                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
                                 sl.add(s);
                                 byte[] b = new byte[0];
                                 try {
-                                    b = Utils.toBytes(sl.toArray(new String[0]));
+                                    b = Utils.toBytes(sl);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -80,15 +80,15 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                                 List<String> sl = new ArrayList<>();
                                 if (nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get())) {
                                     try {
-                                        sl = Arrays.asList(Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get())));
-                                    } catch (IOException | ClassNotFoundException e) {
+                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+                                    } catch (IOException e) {
                                         e.printStackTrace();
                                     }
                                 }
                                 sl.add(s);
                                 byte[] b = new byte[0];
                                 try {
-                                    b = Utils.toBytes(sl.toArray(new String[0]));
+                                    b = Utils.toBytes(sl);
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
