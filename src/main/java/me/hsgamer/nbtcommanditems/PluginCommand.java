@@ -1,6 +1,5 @@
 package me.hsgamer.nbtcommanditems;
 
-import com.sun.deploy.ui.UITextArea;
 import de.tr7zw.itemnbtapi.NBTItem;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -10,7 +9,6 @@ import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import javax.rmi.CORBA.Util;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
