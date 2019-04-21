@@ -4,6 +4,9 @@ import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Variable {
     private boolean isPlaceholderAPI;
 
@@ -22,5 +25,15 @@ public class Variable {
         ;
 
         return stringCopy;
+    }
+
+    public List<String> getParsed(Player player, List<String> list) {
+        List<String> listCopy = new ArrayList<>();
+
+        for (String string : list) {
+            listCopy.add(getParsed(player, string));
+        }
+
+        return listCopy;
     }
 }

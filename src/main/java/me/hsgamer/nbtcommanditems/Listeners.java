@@ -9,6 +9,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Listeners implements Listener {
     @EventHandler
     public void onUse(PlayerInteractEvent event) {
@@ -17,38 +21,22 @@ public class Listeners implements Listener {
         NBTItem nbtitem = new NBTItem(item);
         Player player = event.getPlayer();
         if (!(nbtitem.hasKey(NBTEnums.LEFT_CLICK.get()) || nbtitem.hasKey(NBTEnums.RIGHT_CLICK.get()))) return;
-        String leftclick = NBTCommandItems.getVariable().getParsed(player, nbtitem.getString(NBTEnums.LEFT_CLICK.get()));
-        String rightclick = NBTCommandItems.getVariable().getParsed(player, nbtitem.getString(NBTEnums.RIGHT_CLICK.get()));
+        List<String> rightclicklist = new ArrayList<>();
+        List<String> leftclicklist = new ArrayList<>();
+        try {
+            rightclicklist = Utils.toStrings(nbtitem.getByteArray(NBTEnums.RIGHT_CLICK.get()));
+            leftclicklist = Utils.toStrings(nbtitem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-            if (!leftclick.equals("")) {
-                if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
-                    player.performCommand(leftclick);
-                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
-                    try {
-                        player.setOp(true);
-                        player.performCommand(leftclick);
-                    } finally {
-                        player.setOp(false);
-                    }
-                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), leftclick);
-                }
+            if (!leftclicklist.isEmpty()) {
+                leftclicklist.forEach(s -> sendCommand(player, nbtitem, s));
                 event.setCancelled(true);
             }
         } else if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            if (!rightclick.equals("")) {
-                if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
-                    player.performCommand(rightclick);
-                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
-                    try {
-                        player.setOp(true);
-                        player.performCommand(rightclick);
-                    } finally {
-                        player.setOp(false);
-                    }
-                } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), rightclick);
-                }
+            if (!rightclicklist.isEmpty()) {
+                rightclicklist.forEach(s -> sendCommand(player, nbtitem, s));
                 event.setCancelled(true);
             }
         } else {
@@ -72,6 +60,21 @@ public class Listeners implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    private void sendCommand(Player player, NBTItem nbtitem, String command) {
+        if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
+            player.performCommand(command);
+        } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
+            try {
+                player.setOp(true);
+                player.performCommand(command);
+            } finally {
+                player.setOp(false);
+            }
+        } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
         }
     }
 }
