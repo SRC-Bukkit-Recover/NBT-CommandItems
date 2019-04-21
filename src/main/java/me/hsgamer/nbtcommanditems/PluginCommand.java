@@ -107,19 +107,51 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                     break;
                 }
                 case DEL_LEFT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_DEL_LEFT_COMMAND))) {
+                        if (args.length == 2) {
 
+                        } else {
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_DEL_LEFT_COMMAND);
+                        }
+                    } else {
+                        Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
+                    }
                     break;
                 }
                 case DEL_RIGHT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_DEL_RIGHT_COMMAND))) {
+                        if (args.length == 2) {
 
+                        } else {
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_DEL_RIGHT_COMMAND);
+                        }
+                    } else {
+                        Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
+                    }
                     break;
                 }
                 case SET_LEFT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_LEFT_COMMAND))) {
+                        if (args.length > 3) {
 
+                        } else {
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_SET_LEFT_COMMAND);
+                        }
+                    } else {
+                        Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
+                    }
                     break;
                 }
                 case SET_RIGHT_COMMAND: {
+                    if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_SET_RIGHT_COMMAND))) {
+                        if (args.length > 3) {
 
+                        } else {
+                            Utils.sendMessage(sender, ConfigEnums.USAGE_SET_RIGHT_COMMAND);
+                        }
+                    } else {
+                        Utils.sendMessage(sender, ConfigEnums.NO_PERMISSION);
+                    }
                     break;
                 }
                 case SET_ONE_TIME_USE: {
