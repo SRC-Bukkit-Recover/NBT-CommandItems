@@ -32,6 +32,8 @@ public enum ConfigEnums {
     USAGE_SET_RIGHT_COMMAND("messages.usage.setrightcommand", "&cUsage: /commanditems setrightcommand <index> <command>"),
     USAGE_SET_ONE_TIME_USE("messages.usage.setonetimeuse", "&cUsage: /commanditems setonetimeuse <true/false>"),
     USAGE_SET_SEND_AS("messages.usage.setsendas", "&cUsage: /commanditems setsendas <console/player/op>"),
+    INDEX_OUT_OF_BOUND("messages.index-out-of-bound", "&cThe index is out of bound"),
+    INVALID_INTEGER("messages.invalid-integer", "&cThat should be a positive number"),
     ONE_TIME_USE_INVALID_STATE("messages.one-time-use-invalid-state", "&cThe state should be 'true' or 'false'"),
     SET_SEND_AS_INVALID_SENDER("messages.set-send-as-invalid-sender", "&cThe sender should be 'console', 'player' or 'op'"),
     NO_PERMISSION("messages.no-permission", "&cYou don't have permission to do this"),

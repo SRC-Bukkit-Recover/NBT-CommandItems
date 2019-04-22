@@ -80,7 +80,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                                 List<String> sl = new ArrayList<>();
                                 if (nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get())) {
                                     try {
-                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.RIGHT_CLICK.get()));
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
@@ -109,7 +109,39 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 case DEL_LEFT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_DEL_LEFT_COMMAND))) {
                         if (args.length == 2) {
-
+                            ItemStack item = getItem((Player) sender);
+                            if (!item.getType().equals(Material.AIR)) {
+                                NBTItem nbtItem = new NBTItem(item);
+                                List<String> sl = new ArrayList<>();
+                                if (nbtItem.hasKey(NBTEnums.LEFT_CLICK.get())) {
+                                    try {
+                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                try {
+                                    int index = Integer.parseInt(args[1]);
+                                    if (index >= 0 && index <= sl.size() - 1) {
+                                        sl.remove(index);
+                                        byte[] b = new byte[0];
+                                        try {
+                                            b = Utils.toBytes(sl);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        nbtItem.setByteArray(NBTEnums.LEFT_CLICK.get(), b);
+                                        setItem((Player) sender, nbtItem.getItem());
+                                        Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
+                                    } else {
+                                        Utils.sendMessage(sender, ConfigEnums.INDEX_OUT_OF_BOUND);
+                                    }
+                                } catch (NumberFormatException e) {
+                                    Utils.sendMessage(sender, ConfigEnums.INVALID_INTEGER);
+                                }
+                            } else {
+                                Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
+                            }
                         } else {
                             Utils.sendMessage(sender, ConfigEnums.USAGE_DEL_LEFT_COMMAND);
                         }
@@ -121,7 +153,39 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
                 case DEL_RIGHT_COMMAND: {
                     if (sender.hasPermission((String) Utils.getValueFromConfig(ConfigEnums.PERMISSION_DEL_RIGHT_COMMAND))) {
                         if (args.length == 2) {
-
+                            ItemStack item = getItem((Player) sender);
+                            if (!item.getType().equals(Material.AIR)) {
+                                NBTItem nbtItem = new NBTItem(item);
+                                List<String> sl = new ArrayList<>();
+                                if (nbtItem.hasKey(NBTEnums.RIGHT_CLICK.get())) {
+                                    try {
+                                        sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.RIGHT_CLICK.get()));
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                try {
+                                    int index = Integer.parseInt(args[1]);
+                                    if (index >= 0 && index <= sl.size() - 1) {
+                                        sl.remove(index);
+                                        byte[] b = new byte[0];
+                                        try {
+                                            b = Utils.toBytes(sl);
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        nbtItem.setByteArray(NBTEnums.RIGHT_CLICK.get(), b);
+                                        setItem((Player) sender, nbtItem.getItem());
+                                        Utils.sendMessage(sender, ConfigEnums.SUCCESSFUL);
+                                    } else {
+                                        Utils.sendMessage(sender, ConfigEnums.INDEX_OUT_OF_BOUND);
+                                    }
+                                } catch (NumberFormatException e) {
+                                    Utils.sendMessage(sender, ConfigEnums.INVALID_INTEGER);
+                                }
+                            } else {
+                                Utils.sendMessage(sender, ConfigEnums.NO_ITEM_HAND);
+                            }
                         } else {
                             Utils.sendMessage(sender, ConfigEnums.USAGE_DEL_RIGHT_COMMAND);
                         }
