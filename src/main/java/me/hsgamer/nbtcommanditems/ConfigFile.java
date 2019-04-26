@@ -1,5 +1,6 @@
 package me.hsgamer.nbtcommanditems;
 
+import me.hsgamer.nbtcommanditems.enums.ConfigEnums;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;

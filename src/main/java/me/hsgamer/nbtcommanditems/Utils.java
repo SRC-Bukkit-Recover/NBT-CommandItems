@@ -1,5 +1,6 @@
 package me.hsgamer.nbtcommanditems;
 
+import me.hsgamer.nbtcommanditems.enums.ConfigEnums;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -86,5 +87,23 @@ public class Utils {
         }
 
         return list;
+    }
+
+    @SuppressWarnings("deprecation")
+    public static ItemStack getItem(Player player) {
+        if (NBTCommandItems.getInstance().isLegacy()) {
+            return player.getItemInHand();
+        } else {
+            return player.getInventory().getItemInMainHand();
+        }
+    }
+
+    @SuppressWarnings("deprecation")
+    public static void setItem(Player player, ItemStack item) {
+        if (NBTCommandItems.getInstance().isLegacy()) {
+            player.setItemInHand(item);
+        } else {
+            player.getInventory().setItemInMainHand(item);
+        }
     }
 }

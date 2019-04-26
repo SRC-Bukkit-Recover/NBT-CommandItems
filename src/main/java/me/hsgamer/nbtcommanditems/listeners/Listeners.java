@@ -1,6 +1,9 @@
-package me.hsgamer.nbtcommanditems;
+package me.hsgamer.nbtcommanditems.listeners;
 
 import de.tr7zw.itemnbtapi.NBTItem;
+import me.hsgamer.nbtcommanditems.NBTCommandItems;
+import me.hsgamer.nbtcommanditems.Utils;
+import me.hsgamer.nbtcommanditems.enums.NBTEnums;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

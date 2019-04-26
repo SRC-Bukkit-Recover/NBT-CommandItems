@@ -1,4 +1,4 @@
-package me.hsgamer.nbtcommanditems;
+package me.hsgamer.nbtcommanditems.enums;
 
 public enum NBTEnums {
     LEFT_CLICK("left-click"),
