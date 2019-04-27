@@ -19,9 +19,9 @@ public enum ConfigEnums {
             "&f&l--------------------------------------------------------"
     )),
 
-    DESCRIPTION_SET_COMMAND("messages.description.setcommand", "Set command in the specific index of the item's commands"),
+    DESCRIPTION_SET_COMMAND("messages.description.setcommand", "Set command in the specific index"),
     DESCRIPTION_ADD_COMMAND("messages.description.addcommand", "Add command to the item"),
-    DESCRIPTION_DEL_COMMAND("messages.description.delcommand", "Delete command in the specific index of the item's commands"),
+    DESCRIPTION_DEL_COMMAND("messages.description.delcommand", "Delete command in the specific index"),
     DESCRIPTION_SET_ONE_TIME_USE("messages.description.setonetimeuse", "Toggle one-time-use"),
     DESCRIPTION_SET_SEND_AS("messages.description.setsendas", "Set command sender"),
     DESCRIPTION_GET_COMMAND("messages.description.getcommand", "Get the commands of the item"),
