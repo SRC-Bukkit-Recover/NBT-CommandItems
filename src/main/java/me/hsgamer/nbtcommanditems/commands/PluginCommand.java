@@ -20,6 +20,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
     private static final String SET_SEND_AS = "setsendas";
     private static final String GET_COMMAND = "getcommand";
     private static final String HELP = "help";
+    private static final String ABOUT = "about";
 
     private HashMap<String, SubCommand> subcommands = new HashMap<>();
 
@@ -30,6 +31,7 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         subcommands.put(SET_ONE_TIME_USE, new SetOneTimeUse());
         subcommands.put(SET_SEND_AS, new SetSendAs());
         subcommands.put(GET_COMMAND, new GetCommand());
+        subcommands.put(ABOUT, new AboutCommand());
     }
 
     @Override
