@@ -26,7 +26,7 @@ public abstract class SubCommand implements ISubCommand {
         this.isConsoleAllowed = isConsoleAllowed;
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, String[] args) {
         if (sender instanceof ConsoleCommandSender && !isConsoleAllowed) {
             Utils.sendMessage(sender, ConfigEnums.PLAYER_ONLY);
         } else {

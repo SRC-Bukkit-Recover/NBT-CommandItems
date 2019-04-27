@@ -37,23 +37,23 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         if (args.length < 1 || args[0].equalsIgnoreCase(HELP) || !subcommands.containsKey(args[0].toLowerCase())) {
             // Create Help Info
             List<String> list = new ArrayList<>();
-            list.add((String) Utils.getValueFromConfig(ConfigEnums.HELP_HEADER));
-            List<String> help_info = (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP_INFO);
+            list.addAll((List<String>) Utils.getValueFromConfig(ConfigEnums.HELP_HEADER));
+            List<String> helpinfo = (List<String>) Utils.getValueFromConfig(ConfigEnums.HELP_INFO);
             for (HashMap.Entry<String, SubCommand> entry : subcommands.entrySet()) {
-                List<String> help_info_copy = new ArrayList<>();
-                for (String string : help_info) {
-                    help_info_copy.add(string.replace("<subcommand>", entry.getKey()).replace("<description>", entry.getValue().getDescription()));
+                List<String> helpinfocopy = new ArrayList<>();
+                for (String string : helpinfo) {
+                    helpinfocopy.add(string.replace("<subcommand>", entry.getKey()).replace("<description>", entry.getValue().getDescription()));
                 }
-                list.addAll(help_info_copy);
+                list.addAll(helpinfocopy);
             }
-            for (String string : help_info) {
+            for (String string : helpinfo) {
                 list.add(string.replace("<subcommand>", HELP).replace("<description>", (String) Utils.getValueFromConfig(ConfigEnums.DESCRIPTION_HELP)));
             }
-            list.add((String) Utils.getValueFromConfig(ConfigEnums.HELP_FOOTER));
+            list.addAll((List<String>) Utils.getValueFromConfig(ConfigEnums.HELP_FOOTER));
             // Send Help Info
             Utils.sendMessage(sender, list, false);
         } else {
-            return subcommands.get(args[0].toLowerCase()).onCommand(sender, command, label, args);
+            return subcommands.get(args[0].toLowerCase()).onCommand(sender, args);
         }
         return true;
     }

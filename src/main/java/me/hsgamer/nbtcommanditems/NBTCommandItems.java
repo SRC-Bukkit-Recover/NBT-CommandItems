@@ -9,7 +9,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class NBTCommandItems extends JavaPlugin {
     private static NBTCommandItems instance;
     private static Variable variable;
-    private Metrics metrics;
     private ConfigFile configFile;
     private boolean legacy = false;
 
@@ -31,7 +30,7 @@ public final class NBTCommandItems extends JavaPlugin {
         legacy = getServer().getVersion().contains("1.8") || getServer().getVersion().contains("1.7");
         configFile = new ConfigFile(this);
         variable = new Variable();
-        metrics = new Metrics(this);
+        new Metrics(this);
         getServer().getPluginManager().registerEvents(new Listeners(), this);
         PluginCommand command = new PluginCommand();
         getCommand("commanditems").setExecutor(command);
@@ -43,7 +42,6 @@ public final class NBTCommandItems extends JavaPlugin {
         configFile = null;
         instance = null;
         variable = null;
-        metrics = null;
         HandlerList.unregisterAll(this);
     }
 

@@ -6,12 +6,18 @@ public enum ConfigEnums {
     PREFIX("messages.prefix", "&f[&b&lCommandItems&r&f] "),
     SUCCESSFUL("messages.successful", "&aSuccessfully executed"),
 
-    HELP_HEADER("messages.help.header", "&f&l--------------------------------------------------------"),
+    HELP_HEADER("messages.help.header", Arrays.asList(
+            "&f&l--------------------------------------------------------",
+            ""
+    )),
     HELP_INFO("messages.help.info", Arrays.asList(
             "&f&l/commanditems <subcommand>",
             "                &e<description>"
     )),
-    HELP_FOOTER("messages.help.footer", "&f&l--------------------------------------------------------"),
+    HELP_FOOTER("messages.help.footer", Arrays.asList(
+            "",
+            "&f&l--------------------------------------------------------"
+    )),
 
     DESCRIPTION_SET_COMMAND("messages.description.setcommand", "Set command in the specific index of the item's commands"),
     DESCRIPTION_ADD_COMMAND("messages.description.addcommand", "Add command to the item"),

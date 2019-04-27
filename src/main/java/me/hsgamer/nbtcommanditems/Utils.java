@@ -40,31 +40,18 @@ public class Utils {
 
     public static void setItem(Player player, ItemStack item, EquipmentSlot slot) {
         if (slot == null) return;
-        switch (slot) {
-            case HAND: {
-                player.getInventory().setItemInMainHand(item);
-                break;
-            }
-            case OFF_HAND: {
-                player.getInventory().setItemInOffHand(item);
-                break;
-            }
-            case FEET: {
-                player.getInventory().setBoots(item);
-                break;
-            }
-            case HEAD: {
-                player.getInventory().setHelmet(item);
-                break;
-            }
-            case LEGS: {
-                player.getInventory().setLeggings(item);
-                break;
-            }
-            case CHEST: {
-                player.getInventory().setChestplate(item);
-                break;
-            }
+        if (slot == EquipmentSlot.HAND) {
+            player.getInventory().setItemInMainHand(item);
+        } else if (slot == EquipmentSlot.OFF_HAND) {
+            player.getInventory().setItemInOffHand(item);
+        } else if (slot == EquipmentSlot.FEET) {
+            player.getInventory().setBoots(item);
+        } else if (slot == EquipmentSlot.HEAD) {
+            player.getInventory().setHelmet(item);
+        } else if (slot == EquipmentSlot.LEGS) {
+            player.getInventory().setLeggings(item);
+        } else if (slot == EquipmentSlot.CHEST) {
+            player.getInventory().setChestplate(item);
         }
     }
 

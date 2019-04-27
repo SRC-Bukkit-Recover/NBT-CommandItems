@@ -27,8 +27,8 @@ public class Listeners implements Listener {
         List<String> rightclicklist = new ArrayList<>();
         List<String> leftclicklist = new ArrayList<>();
         try {
-            rightclicklist = Utils.toStrings(nbtitem.getByteArray(NBTEnums.RIGHT_CLICK.get()));
-            leftclicklist = Utils.toStrings(nbtitem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+            rightclicklist = NBTCommandItems.getVariable().getParsed(player, Utils.toStrings(nbtitem.getByteArray(NBTEnums.RIGHT_CLICK.get())));
+            leftclicklist = NBTCommandItems.getVariable().getParsed(player, Utils.toStrings(nbtitem.getByteArray(NBTEnums.LEFT_CLICK.get())));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,11 +70,15 @@ public class Listeners implements Listener {
         if (!nbtitem.hasKey(NBTEnums.SEND_AS.get()) || nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("player")) {
             player.performCommand(command);
         } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("op")) {
-            try {
-                player.setOp(true);
+            if (!player.isOp()) {
+                try {
+                    player.setOp(true);
+                    player.performCommand(command);
+                } finally {
+                    player.setOp(false);
+                }
+            } else {
                 player.performCommand(command);
-            } finally {
-                player.setOp(false);
             }
         } else if (nbtitem.getString(NBTEnums.SEND_AS.get()).equalsIgnoreCase("console")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command);
