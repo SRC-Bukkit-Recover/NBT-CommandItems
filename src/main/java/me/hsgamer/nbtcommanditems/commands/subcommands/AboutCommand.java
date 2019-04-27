@@ -17,7 +17,6 @@ public class AboutCommand extends SubCommand {
 
     @Override
     public void onSubCommand(CommandSender sender, String[] args) {
-        if (!(boolean) Utils.getValueFromConfig(ConfigEnums.ABOUT_COMMAND)) return;
         List<String> messages = Arrays.asList(
                 "&b&lPlugin&f: " + NBTCommandItems.getInstance().getDescription().getName(),
                 "&b&lAuthor&f: " + NBTCommandItems.getInstance().getDescription().getAuthors(),

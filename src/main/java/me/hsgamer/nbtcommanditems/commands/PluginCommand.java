@@ -31,7 +31,9 @@ public class PluginCommand implements TabExecutor, CommandExecutor {
         subcommands.put(SET_ONE_TIME_USE, new SetOneTimeUse());
         subcommands.put(SET_SEND_AS, new SetSendAs());
         subcommands.put(GET_COMMAND, new GetCommand());
-        subcommands.put(ABOUT, new AboutCommand());
+        if ((boolean) Utils.getValueFromConfig(ConfigEnums.ABOUT_COMMAND)) {
+            subcommands.put(ABOUT, new AboutCommand());
+        }
     }
 
     @Override
