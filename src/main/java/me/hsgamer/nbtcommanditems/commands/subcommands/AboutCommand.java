@@ -3,6 +3,7 @@ package me.hsgamer.nbtcommanditems.commands.subcommands;
 import me.hsgamer.nbtcommanditems.NBTCommandItems;
 import me.hsgamer.nbtcommanditems.Utils;
 import me.hsgamer.nbtcommanditems.commands.SubCommand;
+import me.hsgamer.nbtcommanditems.enums.ConfigEnums;
 import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
@@ -11,15 +12,16 @@ import java.util.List;
 
 public class AboutCommand extends SubCommand {
     public AboutCommand() {
-        super("About the author", "", "", true);
+        super((String) Utils.getValueFromConfig(ConfigEnums.DESCRIPTION_ABOUT), "", "", true);
     }
 
     @Override
     public void onSubCommand(CommandSender sender, String[] args) {
+        if (!(boolean) Utils.getValueFromConfig(ConfigEnums.ABOUT_COMMAND)) return;
         List<String> messages = Arrays.asList(
-                "&b&lPlugin &f:" + NBTCommandItems.getInstance().getDescription().getName(),
-                "&b&lAuthor &f:" + NBTCommandItems.getInstance().getDescription().getAuthors(),
-                "&b&lVersion &f:" + NBTCommandItems.getInstance().getDescription().getVersion()
+                "&b&lPlugin&f: " + NBTCommandItems.getInstance().getDescription().getName(),
+                "&b&lAuthor&f: " + NBTCommandItems.getInstance().getDescription().getAuthors(),
+                "&b&lVersion&f: " + NBTCommandItems.getInstance().getDescription().getVersion()
         );
         Utils.sendMessage(sender, messages, true);
     }

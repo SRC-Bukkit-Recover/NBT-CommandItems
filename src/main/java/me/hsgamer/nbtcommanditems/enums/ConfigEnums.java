@@ -5,6 +5,7 @@ import java.util.Arrays;
 public enum ConfigEnums {
     PREFIX("messages.prefix", "&f[&b&lCommandItems&r&f] "),
     SUCCESSFUL("messages.successful", "&aSuccessfully executed"),
+    ABOUT_COMMAND("enable-about-command", true),
 
     HELP_HEADER("messages.help.header", Arrays.asList(
             "&f&l--------------------------------------------------------",
@@ -26,6 +27,7 @@ public enum ConfigEnums {
     DESCRIPTION_SET_SEND_AS("messages.description.setsendas", "Set command sender"),
     DESCRIPTION_GET_COMMAND("messages.description.getcommand", "Get the commands of the item"),
     DESCRIPTION_HELP("messages.description.help", "Help command"),
+    DESCRIPTION_ABOUT("messages.description.about", "About the plugin"),
 
     USAGE_ADD_COMMAND("messages.usage.addcommand", "&cUsage: /commanditems addcommand <left/right> <command>"),
     USAGE_DEL_COMMAND("messages.usage.delcommand", "&cUsage: /commanditems delcommand <left/right> <index>"),
