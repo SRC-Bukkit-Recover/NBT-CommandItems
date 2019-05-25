@@ -42,7 +42,7 @@ public class AddCommand extends SubCommand {
         List<String> sl = new ArrayList<>();
         if (nbtItem.hasKey(nbtEnums.get())) {
             try {
-                sl = Utils.toStrings(nbtItem.getByteArray(NBTEnums.LEFT_CLICK.get()));
+                sl = Utils.toStrings(nbtItem.getByteArray(nbtEnums.get()));
             } catch (IOException e) {
                 e.printStackTrace();
             }

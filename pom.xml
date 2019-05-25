@@ -108,7 +108,7 @@
         <dependency>
             <groupId>com.github.tr7zw.Item-NBT-API</groupId>
             <artifactId>item-nbt-api</artifactId>
-            <version>master-be4dfa593b-1</version>
+            <version>92c3e14d4a</version>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
